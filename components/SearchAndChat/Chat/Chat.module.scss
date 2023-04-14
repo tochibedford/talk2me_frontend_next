@@ -29,10 +29,124 @@
   transition: all 0.6s cubic-bezier(0.04, 0.05, 0, 1);
   transform-origin: 100% 100%;
   animation: unfocusing 0.7s forwards 1 cubic-bezier(0.04, 0.05, 0, 1);
-  padding: 1em;
+  padding: 1em 3em;
+  display: flex;
+  flex-direction: column;
 
   @media screen and (max-width: 768px) {
     border-width: 1px;
+  }
+
+  .top {
+    margin: 0.5rem 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .userHandle {
+      margin-right: auto;
+      margin-left: auto;
+      font-size: 1.4vw;
+      font-weight: bold;
+
+      @media screen and (max-width: 1300px) {
+        font-size: 1.9vw;
+      }
+
+      @media screen and (max-width: 1024px) {
+        font-size: 2.4vw;
+      }
+    }
+  }
+
+  .chatBox {
+    height: 100%;
+  }
+
+  .entryBox {
+    width: 100%;
+    form {
+      display: grid;
+      place-items: center;
+      text-align: center;
+      fieldset {
+        width: 100%;
+        border: 0;
+        input,
+        textarea,
+        button {
+          -webkit-appearance: none;
+          border-radius: 0;
+        }
+        label {
+          display: flex;
+          position: relative;
+          input,
+          textarea {
+            padding: 0.5rem;
+            padding-left: 1rem;
+            padding-right: 5em;
+            font-family: "Poppins", sans-serif;
+            font-size: 1vw;
+            width: 100%;
+            border-radius: 0.7rem;
+            border: 2px solid #000;
+            transition: box-shadow 0.6s;
+
+            &:active {
+              box-shadow: 0 0 3px black;
+              outline: 0;
+            }
+
+            &:focus {
+              outline: 3px solid #edc6e6;
+            }
+
+            @media screen and (max-width: 1320px) {
+              font-size: 1.3vw;
+            }
+
+            @media screen and (max-width: 1024px) {
+              font-size: 1.5vw;
+            }
+
+            @media screen and (max-width: 768px) {
+              font-size: 2.5vw;
+            }
+          }
+
+          button {
+            font-size: 1vw;
+            position: absolute;
+            right: 0;
+            padding: 0.2rem 1rem;
+            border-radius: 0;
+            border-left: 0;
+            background-color: #000;
+            font-family: "Poppins", sans-serif;
+            color: #c6cded;
+            border-radius: 0.7rem;
+            border-style: solid;
+            border: 2px solid #000;
+            height: 100%;
+            cursor: pointer;
+
+            @media screen and (max-width: 1320px) {
+              font-size: 1.5vw;
+            }
+
+            @media screen and (max-width: 1024px) {
+              font-size: 1.8vw;
+            }
+
+            @media screen and (max-width: 768px) {
+              font-size: 3vw;
+            }
+          }
+        }
+      }
+    }
   }
 }
 
