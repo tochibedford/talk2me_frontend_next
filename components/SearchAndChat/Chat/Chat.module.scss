@@ -1,0 +1,64 @@
+@keyframes unfocusing {
+  0% {
+    scale: 1;
+    z-index: 1;
+  }
+  50% {
+    scale: 0.8;
+    transform: translate(10%, 10%);
+    z-index: 1;
+    opacity: 0.7;
+  }
+  100% {
+    scale: 1;
+    transform: none;
+    z-index: 0;
+    opacity: 1;
+  }
+}
+
+.container {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 70%;
+  height: 70%;
+  border: 3px solid #000;
+  background-color: #c6cded;
+  pointer-events: none;
+  transition: all 0.6s cubic-bezier(0.04, 0.05, 0, 1);
+  transform-origin: 100% 100%;
+  animation: unfocusing 0.7s forwards 1 cubic-bezier(0.04, 0.05, 0, 1);
+  padding: 1em;
+
+  @media screen and (max-width: 768px) {
+    border-width: 1px;
+  }
+}
+
+@keyframes focusing {
+  0% {
+    scale: 1;
+  }
+  50% {
+    scale: 0.8;
+    transform: translate(10%, 10%);
+    opacity: 0.6;
+  }
+  100% {
+    scale: 1;
+    transform: none;
+    z-index: 1;
+    opacity: 1;
+  }
+}
+.focused {
+  pointer-events: all;
+  width: 90%;
+  height: 90%;
+  animation: focusing 0.7s forwards 1 cubic-bezier(0.04, 0.05, 0, 1);
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 100%;
+  }
+}
