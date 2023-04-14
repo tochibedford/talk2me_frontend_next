@@ -39,21 +39,18 @@ export default function Chat() {
                 .catch(console.error)
         }
     }, [twitterId])
-    useEffect(() => {
-        const newLineString = "\n"
-        const regex = new RegExp(newLineString, "g");
-        const matchArray = chatInput.match(regex) ?? []
 
+    useEffect(() => {
         const textArea = textAreaRef.current
         if (textArea) {
             textArea.style.height = "0px"
-            console.log(textArea.clientHeight, textArea.scrollHeight)
             const computedStyles = window.getComputedStyle(textArea)
             const em = parseFloat(computedStyles.getPropertyValue('font-size'))
             textArea.style.height = `${Math.min(6 * em, textArea.scrollHeight)}px`
         }
 
     }, [chatInput, textAreaRef])
+
     return (
         <div className={`${styles.container} ${twitterId ? styles.focused : ""}`}>
             <div className={styles.top}>
