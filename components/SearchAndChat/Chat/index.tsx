@@ -26,7 +26,7 @@ export default function Chat() {
 
     useEffect(() => {
         if (twitterId) {
-            fetch(`https://talk2mebackend2-musicofbyte.b4a.run/getUserTweets/${twitterId}/50`)
+            fetch(`/pyApi/v1/getUserTweets/${twitterId}/50`)
                 .then(res => res.json())
                 .then(res => {
                     const parser = new DOMParser();
