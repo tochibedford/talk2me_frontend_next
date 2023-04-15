@@ -7,7 +7,7 @@ export default function Search() {
     const [twitterHandle, setTwitterHandle] = useState("")
 
     return (
-        <section role="search" className={`${styles.container} ${location.pathname === "/" ? styles.focused : ""}`}>
+        <section role="search" className={`${styles.container} ${location.pathname === "/" ? styles.focused : ""}`} style={{ opacity: 0.2 }}>
             <form action="" method="get" onSubmit={e => { e.preventDefault(); location.push(`/${twitterHandle}/chat`) }}>
                 <fieldset>
                     <legend>PUT IN A PUBLIC TWITTER HANDLE</legend>

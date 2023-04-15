@@ -3,6 +3,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import ChatBubble from "@components/components/ChatBubble"
+import ChatLoader from "@components/components/ChatLoader"
 
 export default function Chat() {
     type chatType = {
@@ -25,6 +26,7 @@ export default function Chat() {
     }
 
     useEffect(() => {
+        setIsChatLoading(true)
         if (twitterId) {
             fetch(`/pyApi/v1/getUserTweets/${twitterId}`)
                 .then(res => res.json())
@@ -39,8 +41,12 @@ export default function Chat() {
                     })
                     setTweets(result)
                     setTestChat(testChat)
+                    setIsChatLoading(false)
                 })
-                .catch(console.error)
+                .catch(error => {
+                    console.error(error)
+                    setIsChatLoading(false)
+                })
         }
     }, [twitterId])
 
@@ -86,9 +92,8 @@ export default function Chat() {
                 <div className={styles.userHandle}>@{twitterId}</div>
             </div>
             <div className={styles.chatBox} ref={chatBoxContainerRef}>
-
                 <div className={styles.chatBoxInner}>
-                    {testChat.map((chat, index, arr) => {
+                    {isChatLoading ? <ChatLoader style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} width={60} height={60} /> : testChat.map((chat, index, arr) => {
                         return <ChatBubble style={{ animationDelay: `${(index - Math.max(0, arr.length - 1 - 5)) * 0.1}s` }} key={index} stickyRight={chat.userChat} text={chat.text} />
                     })}
                 </div>
