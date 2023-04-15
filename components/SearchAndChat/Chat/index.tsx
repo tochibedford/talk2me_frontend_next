@@ -9,6 +9,7 @@ export default function Chat() {
     const [tweets, setTweets] = useState<string[]>([])
     const [chatInput, setChatInput] = useState("")
     const textAreaRef = useRef<HTMLTextAreaElement>(null)
+    const chatBoxContainerRef = useRef<HTMLDivElement>(null)
 
     function calculateCharactersPerRow(elementWidth: number, fontSize: number) {
         // Get the width of a single character by creating a temporary span element with the same font size
@@ -52,6 +53,14 @@ export default function Chat() {
 
     }, [chatInput, textAreaRef])
 
+
+    useEffect(() => {
+        const chatBoxContainer = chatBoxContainerRef.current
+        if (chatBoxContainer) {
+            chatBoxContainer.scrollTop = chatBoxContainer.scrollHeight
+        }
+    }, [tweets])
+
     return (
         <div className={`${styles.container} ${twitterId ? styles.focused : ""}`}>
             <div className={styles.top}>
@@ -60,28 +69,16 @@ export default function Chat() {
                 </Link>
                 <div className={styles.userHandle}>@{twitterId}</div>
             </div>
-            <div className={styles.chatBox}>
+            <div className={styles.chatBox} ref={chatBoxContainerRef}>
                 <div className={styles.chatBoxInner}>
 
                     {/* {tweets} */}
-                    <ChatBubble text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
-                    <ChatBubble stickyRight={true} text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
-                    <ChatBubble stickyRight={true} text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
-                    <ChatBubble text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
-                    <ChatBubble stickyRight={true} text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
-                    <ChatBubble text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
-                    <ChatBubble stickyRight={true} text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
-                    <ChatBubble text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
-                    <ChatBubble stickyRight={true} text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
-                    <ChatBubble text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
-                    <ChatBubble stickyRight={true} text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
-                    <ChatBubble text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
-                    <ChatBubble text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
-                    <ChatBubble stickyRight={true} text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
-                    <ChatBubble text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
-                    <ChatBubble text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
-                    <ChatBubble stickyRight={true} text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
-                    <ChatBubble text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
+                    {/* {tweets.length !== 0 && Array(3).fill(1).map((_, index, arr) => {
+                        return <ChatBubble style={{ animationDelay: `${(index - Math.max(0, arr.length - 1 - 5)) * 0.1}s` }} key={index} stickyRight={index % 2 == 0} text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
+                    })} */}
+                    {tweets.map((text, index, arr) => {
+                        return <ChatBubble style={{ animationDelay: `${(index - Math.max(0, arr.length - 1 - 5)) * 0.1}s` }} key={index} stickyRight={index % 2 == 0} text={text} />
+                    })}
                 </div>
             </div>
             <div className={styles.entryBox}>
