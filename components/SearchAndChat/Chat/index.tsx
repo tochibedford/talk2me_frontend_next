@@ -5,38 +5,40 @@ import { useRouter } from 'next/router'
 import ChatBubble from "@components/components/ChatBubble"
 
 export default function Chat() {
+    type chatType = {
+        userChat: boolean
+        text: string
+    }
     const { twitterId } = useRouter().query
     const [tweets, setTweets] = useState<string[]>([])
+    const [testChat, setTestChat] = useState<chatType[]>([])
     const [chatInput, setChatInput] = useState("")
     const textAreaRef = useRef<HTMLTextAreaElement>(null)
     const chatBoxContainerRef = useRef<HTMLDivElement>(null)
+    const [isChatLoading, setIsChatLoading] = useState(false)
 
-    function calculateCharactersPerRow(elementWidth: number, fontSize: number) {
-        // Get the width of a single character by creating a temporary span element with the same font size
-        const tempElement = document.createElement("span");
-        tempElement.style.fontSize = `${fontSize}px`;
-        tempElement.textContent = "A";
-        document.body.appendChild(tempElement);
-        const characterWidth = tempElement.offsetWidth;
-        document.body.removeChild(tempElement);
-
-        // Calculate the maximum number of characters that can fit in the element's width
-        const maxCharacters = Math.floor(elementWidth / characterWidth);
-
-        return maxCharacters;
+    const scrollToBottom = () => {
+        const chatBoxContainer = chatBoxContainerRef.current
+        if (chatBoxContainer) {
+            chatBoxContainer.scrollTop = chatBoxContainer.scrollHeight
+        }
     }
 
     useEffect(() => {
         if (twitterId) {
-            fetch(`/pyApi/v1/getUserTweets/${twitterId}/50`)
+            fetch(`/pyApi/v1/getUserTweets/${twitterId}`)
                 .then(res => res.json())
                 .then(res => {
                     const parser = new DOMParser();
-                    const result = res.map((item: string) => {
+                    const result: string[] = res.map((item: string) => {
                         const decodedData = parser.parseFromString(item, 'text/html').body.textContent;
                         return decodedData
                     })
+                    const testChat: chatType[] = result.map((item: string): chatType => {
+                        return { userChat: Math.random() > 0.5, text: item }
+                    })
                     setTweets(result)
+                    setTestChat(testChat)
                 })
                 .catch(console.error)
         }
@@ -53,13 +55,9 @@ export default function Chat() {
 
     }, [chatInput, textAreaRef])
 
-
     useLayoutEffect(() => {
-        const chatBoxContainer = chatBoxContainerRef.current
-        if (chatBoxContainer) {
-            chatBoxContainer.scrollTop = chatBoxContainer.scrollHeight
-        }
-    }, [tweets])
+        scrollToBottom()
+    }, [tweets, testChat])
 
     useEffect(() => {
         const handleResize = () => {
@@ -90,13 +88,13 @@ export default function Chat() {
             <div className={styles.chatBox} ref={chatBoxContainerRef}>
 
                 <div className={styles.chatBoxInner}>
-                    {tweets.map((text, index, arr) => {
-                        return <ChatBubble style={{ animationDelay: `${(index - Math.max(0, arr.length - 1 - 5)) * 0.1}s` }} key={index} stickyRight={index % 2 == 0} text={text} />
+                    {testChat.map((chat, index, arr) => {
+                        return <ChatBubble style={{ animationDelay: `${(index - Math.max(0, arr.length - 1 - 5)) * 0.1}s` }} key={index} stickyRight={chat.userChat} text={chat.text} />
                     })}
                 </div>
             </div>
             <div className={styles.entryBox}>
-                <form action="" method="get" onSubmit={e => { e.preventDefault(); }}>
+                <form action="" onSubmit={e => { e.preventDefault(); setTestChat(prev => [...prev, { userChat: true, text: chatInput }]); setChatInput("") }}>
                     <fieldset>
                         <label htmlFor="search">
                             <textarea ref={textAreaRef} name="search" id="searchInput" onChange={(e) => setChatInput(e.target.value)} value={chatInput} required />
