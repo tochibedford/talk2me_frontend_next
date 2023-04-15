@@ -2,6 +2,7 @@ import styles from "./Chat.module.scss"
 import { useEffect, useRef, useState } from "react"
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import ChatBubble from "@components/components/ChatBubble"
 
 export default function Chat() {
     const { twitterId } = useRouter().query
@@ -60,7 +61,28 @@ export default function Chat() {
                 <div className={styles.userHandle}>@{twitterId}</div>
             </div>
             <div className={styles.chatBox}>
-                {tweets}
+                <div className={styles.chatBoxInner}>
+
+                    {/* {tweets} */}
+                    <ChatBubble text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
+                    <ChatBubble stickyRight={true} text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
+                    <ChatBubble stickyRight={true} text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
+                    <ChatBubble text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
+                    <ChatBubble stickyRight={true} text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
+                    <ChatBubble text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
+                    <ChatBubble stickyRight={true} text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
+                    <ChatBubble text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
+                    <ChatBubble stickyRight={true} text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
+                    <ChatBubble text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
+                    <ChatBubble stickyRight={true} text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
+                    <ChatBubble text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
+                    <ChatBubble text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
+                    <ChatBubble stickyRight={true} text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
+                    <ChatBubble text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
+                    <ChatBubble text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
+                    <ChatBubble stickyRight={true} text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
+                    <ChatBubble text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
+                </div>
             </div>
             <div className={styles.entryBox}>
                 <form action="" method="get" onSubmit={e => { e.preventDefault(); }}>
