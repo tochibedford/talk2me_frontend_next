@@ -26,8 +26,8 @@ export default function Chat() {
     }
 
     useEffect(() => {
-        setIsChatLoading(true)
         if (twitterId) {
+            setIsChatLoading(true)
             fetch(`/pyApi/v1/getUserTweets/${twitterId}`)
                 .then(res => res.json())
                 .then(res => {
