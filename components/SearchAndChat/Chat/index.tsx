@@ -61,6 +61,24 @@ export default function Chat() {
         }
     }, [tweets])
 
+    useEffect(() => {
+        const handleResize = () => {
+            const textArea = textAreaRef.current
+            if (textArea) {
+                textArea.style.height = "0px"
+                const computedStyles = window.getComputedStyle(textArea)
+                const em = parseFloat(computedStyles.getPropertyValue('font-size'))
+                textArea.style.height = `${Math.min(6 * em, textArea.scrollHeight)}px`
+            }
+        }
+
+        window.addEventListener("resize", handleResize)
+
+        return () => {
+            window.removeEventListener("resize", handleResize)
+        }
+    }, [])
+
     return (
         <div className={`${styles.container} ${twitterId ? styles.focused : ""}`}>
             <div className={styles.top}>
@@ -70,6 +88,7 @@ export default function Chat() {
                 <div className={styles.userHandle}>@{twitterId}</div>
             </div>
             <div className={styles.chatBox} ref={chatBoxContainerRef}>
+
                 <div className={styles.chatBoxInner}>
 
                     {/* {tweets} */}
