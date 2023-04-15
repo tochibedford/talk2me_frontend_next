@@ -1,5 +1,5 @@
 import styles from "./Chat.module.scss"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import ChatBubble from "@components/components/ChatBubble"
@@ -54,7 +54,7 @@ export default function Chat() {
     }, [chatInput, textAreaRef])
 
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const chatBoxContainer = chatBoxContainerRef.current
         if (chatBoxContainer) {
             chatBoxContainer.scrollTop = chatBoxContainer.scrollHeight
@@ -90,11 +90,6 @@ export default function Chat() {
             <div className={styles.chatBox} ref={chatBoxContainerRef}>
 
                 <div className={styles.chatBoxInner}>
-
-                    {/* {tweets} */}
-                    {/* {tweets.length !== 0 && Array(3).fill(1).map((_, index, arr) => {
-                        return <ChatBubble style={{ animationDelay: `${(index - Math.max(0, arr.length - 1 - 5)) * 0.1}s` }} key={index} stickyRight={index % 2 == 0} text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere accusamus provident dicta officia totam a sunt excepturi laborum, libero impedit?" />
-                    })} */}
                     {tweets.map((text, index, arr) => {
                         return <ChatBubble style={{ animationDelay: `${(index - Math.max(0, arr.length - 1 - 5)) * 0.1}s` }} key={index} stickyRight={index % 2 == 0} text={text} />
                     })}
