@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import ChatBubble from "@components/components/ChatBubble"
 import ChatLoader from "@components/components/ChatLoader"
+import { useTweets } from "@components/hooks"
+import ErrorDisplay from "@components/components/ErrorDisplay"
 
 export default function Chat() {
     type chatType = {
@@ -11,12 +13,10 @@ export default function Chat() {
         text: string
     }
     const { twitterId } = useRouter().query
-    const [tweets, setTweets] = useState<string[]>([])
     const [testChat, setTestChat] = useState<chatType[]>([])
     const [chatInput, setChatInput] = useState("")
     const textAreaRef = useRef<HTMLTextAreaElement>(null)
     const chatBoxContainerRef = useRef<HTMLDivElement>(null)
-    const [isChatLoading, setIsChatLoading] = useState(false)
 
     const scrollToBottom = () => {
         const chatBoxContainer = chatBoxContainerRef.current
@@ -25,30 +25,13 @@ export default function Chat() {
         }
     }
 
+    const { tweets, isLoading, error } = useTweets(twitterId as string)
     useEffect(() => {
-        if (twitterId) {
-            setIsChatLoading(true)
-            fetch(`/pyApi/v1/getUserTweets/${twitterId}`)
-                .then(res => res.json())
-                .then(res => {
-                    const parser = new DOMParser();
-                    const result: string[] = res.map((item: string) => {
-                        const decodedData = parser.parseFromString(item, 'text/html').body.textContent;
-                        return decodedData
-                    })
-                    const testChat: chatType[] = result.map((item: string): chatType => {
-                        return { userChat: Math.random() > 0.5, text: item }
-                    })
-                    setTweets(result)
-                    setTestChat(testChat)
-                    setIsChatLoading(false)
-                })
-                .catch(error => {
-                    console.error(error)
-                    setIsChatLoading(false)
-                })
-        }
-    }, [twitterId])
+        const testChat: chatType[] = tweets.map((item: string): chatType => {
+            return { userChat: Math.random() > 0.5, text: item }
+        })
+        setTestChat(testChat)
+    }, [tweets])
 
     useEffect(() => {
         const textArea = textAreaRef.current
@@ -93,7 +76,8 @@ export default function Chat() {
             </div>
             <div className={styles.chatBox} ref={chatBoxContainerRef}>
                 <div className={styles.chatBoxInner}>
-                    {isChatLoading ? <ChatLoader style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} width={60} height={60} /> : testChat.map((chat, index, arr) => {
+                    {error && <ErrorDisplay error={error} />}
+                    {isLoading ? <ChatLoader style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} width={60} height={60} /> : testChat.map((chat, index, arr) => {
                         return <ChatBubble style={{ animationDelay: `${(index - Math.max(0, arr.length - 1 - 5)) * 0.1}s` }} key={index} stickyRight={chat.userChat} text={chat.text} />
                     })}
                 </div>

@@ -1,0 +1,21 @@
+.container {
+  width: 100%;
+  background-color: #ca2a2a;
+  color: #000;
+  font-size: 1.5vw;
+  white-space: pre-wrap;
+  border-radius: 1.1em;
+  padding: 1em;
+
+  @media screen and (max-width: 1320px) {
+    font-size: 1.5vw;
+  }
+
+  @media screen and (max-width: 1024px) {
+    font-size: 1.8vw;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 3vw;
+  }
+}
