@@ -1,5 +1,5 @@
 import styles from "./Chat.module.scss"
-import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { FormEvent, useEffect, useLayoutEffect, useRef, useState } from "react"
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import ChatBubble from "@components/components/ChatBubble"
@@ -17,6 +17,7 @@ export default function Chat() {
     const [chatInput, setChatInput] = useState("")
     const textAreaRef = useRef<HTMLTextAreaElement>(null)
     const chatBoxContainerRef = useRef<HTMLDivElement>(null)
+    const testChatRef = useRef<chatType[]>([])
 
     const scrollToBottom = () => {
         const chatBoxContainer = chatBoxContainerRef.current
@@ -26,12 +27,12 @@ export default function Chat() {
     }
 
     const { tweets, isLoading, error } = useTweets(twitterId as string)
-    useEffect(() => {
-        const testChat: chatType[] = tweets.map((item: string): chatType => {
-            return { userChat: Math.random() > 0.5, text: item }
-        })
-        setTestChat(testChat)
-    }, [tweets])
+    // useEffect(() => {
+    //     const testChat: chatType[] = tweets.map((item: string): chatType => {
+    //         return { userChat: Math.random() > 0.5, text: item }
+    //     })
+    //     setTestChat(testChat)
+    // }, [tweets])
 
     useEffect(() => {
         const textArea = textAreaRef.current
@@ -66,6 +67,39 @@ export default function Chat() {
         }
     }, [])
 
+    const handleChat = (e: FormEvent) => {
+        e.preventDefault()
+        let newChatSet: chatType[] = []
+        setTestChat(prev => {
+            newChatSet = [...prev, { userChat: true, text: chatInput }]
+            // testChatRef.current = newChatSet
+            // console.log(testChatRef.current)
+            const requestData = {
+                tweets: tweets,
+                chat: newChatSet
+            }
+            fetch("/api/chat", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                })
+                .catch(err => {
+                    console.error(err)
+                })
+            return newChatSet
+        })
+        setChatInput("")
+
+
+
+    }
+
     return (
         <div className={`${styles.container} ${twitterId ? styles.focused : ""}`}>
             <div className={styles.top}>
@@ -83,7 +117,7 @@ export default function Chat() {
                 </div>
             </div>
             <div className={styles.entryBox}>
-                <form action="" onSubmit={e => { e.preventDefault(); setTestChat(prev => [...prev, { userChat: true, text: chatInput }]); setChatInput("") }}>
+                <form action="" onSubmit={handleChat}>
                     <fieldset>
                         <label htmlFor="search">
                             <textarea ref={textAreaRef} name="search" id="searchInput" onChange={(e) => setChatInput(e.target.value)} value={chatInput} required />
