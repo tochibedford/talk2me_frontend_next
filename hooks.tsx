@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
 
 export function useTweets(twitterId: string) {
-    type chatType = {
-        userChat: boolean
-        text: string
-    }
     const [tweets, setTweets] = useState<string[]>([])
+    const [genTweets, setGenTweets] = useState<string[]>([])
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     useEffect(() => {
@@ -28,19 +25,45 @@ export function useTweets(twitterId: string) {
                         const decodedData = parser.parseFromString(item, 'text/html').body.textContent;
                         return decodedData
                     })
-                    const testChat: chatType[] = result.map((item: string): chatType => {
-                        return { userChat: Math.random() > 0.5, text: item }
-                    })
                     setTweets(result)
                 })
                 .catch((error: Error) => {
                     setError(error.message + (error.cause ? "\n" + error?.cause : ""))
                 })
+        }
+    }, [twitterId])
+
+    useEffect(() => {
+        if (twitterId && tweets.length > 0) {
+            const requestData = {
+                twitterId: twitterId,
+                tweets: tweets
+            }
+            let genTweetsCache: string[] = []
+            fetch("/api/chat", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    data.message.forEach((completion: { choices: { text: string, finish_reason: string }[], [key: string]: any }) => {
+                        const tweetSet = "1." + completion.choices[0].text
+                        const tweetSetList = tweetSet.split("\n")
+                        genTweetsCache = genTweetsCache.concat(tweetSetList)
+                    })
+                    setGenTweets(genTweetsCache)
+                })
+                .catch(err => {
+                    console.error(err)
+                })
                 .finally(() => {
                     setIsLoading(false)
                 })
         }
-    }, [twitterId])
+    }, [tweets, twitterId])
 
-    return { tweets, isLoading, error }
+    return { genTweets, isLoading, error }
 }

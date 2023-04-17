@@ -26,13 +26,13 @@ export default function Chat() {
         }
     }
 
-    const { tweets, isLoading, error } = useTweets(twitterId as string)
-    // useEffect(() => {
-    //     const testChat: chatType[] = tweets.map((item: string): chatType => {
-    //         return { userChat: Math.random() > 0.5, text: item }
-    //     })
-    //     setTestChat(testChat)
-    // }, [tweets])
+    const { genTweets, isLoading, error } = useTweets(twitterId as string)
+    useEffect(() => {
+        const testChat: chatType[] = genTweets.map((item: string): chatType => {
+            return { userChat: false, text: item }
+        })
+        setTestChat(testChat)
+    }, [genTweets])
 
     useEffect(() => {
         const textArea = textAreaRef.current
@@ -47,7 +47,7 @@ export default function Chat() {
 
     useLayoutEffect(() => {
         scrollToBottom()
-    }, [tweets, testChat])
+    }, [genTweets, testChat])
 
     useEffect(() => {
         const handleResize = () => {
@@ -67,38 +67,38 @@ export default function Chat() {
         }
     }, [])
 
-    const handleChat = (e: FormEvent) => {
-        e.preventDefault()
-        let newChatSet: chatType[] = []
-        setTestChat(prev => {
-            newChatSet = [...prev, { userChat: true, text: chatInput }]
-            // testChatRef.current = newChatSet
-            // console.log(testChatRef.current)
-            const requestData = {
-                tweets: tweets,
-                chat: newChatSet
-            }
-            fetch("/api/chat", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(requestData)
-            })
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data)
-                })
-                .catch(err => {
-                    console.error(err)
-                })
-            return newChatSet
-        })
-        setChatInput("")
+    // const handleChat = (e: FormEvent) => {
+    //     e.preventDefault()
+    //     let newChatSet: chatType[] = []
+    //     setTestChat(prev => {
+    //         newChatSet = [...prev, { userChat: true, text: chatInput }]
+    //         // testChatRef.current = newChatSet
+    //         // console.log(testChatRef.current)
+    //         const requestData = {
+    //             tweets: tweets,
+    //             chat: newChatSet
+    //         }
+    //         fetch("/api/chat", {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify(requestData)
+    //         })
+    //             .then(res => res.json())
+    //             .then(data => {
+    //                 console.log(data)
+    //             })
+    //             .catch(err => {
+    //                 console.error(err)
+    //             })
+    //         return newChatSet
+    //     })
+    //     setChatInput("")
 
 
 
-    }
+    // }
 
     return (
         <div className={`${styles.container} ${twitterId ? styles.focused : ""}`}>
@@ -116,7 +116,7 @@ export default function Chat() {
                     })}
                 </div>
             </div>
-            <div className={styles.entryBox}>
+            {/* <div className={styles.entryBox}>
                 <form action="" onSubmit={handleChat}>
                     <fieldset>
                         <label htmlFor="search">
@@ -125,7 +125,7 @@ export default function Chat() {
                         </label>
                     </fieldset>
                 </form>
-            </div>
+            </div> */}
         </div>
     )
 }

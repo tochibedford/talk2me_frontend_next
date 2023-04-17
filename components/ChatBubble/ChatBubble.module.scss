@@ -12,14 +12,22 @@
 .container {
   border: 2px solid #000;
   border-radius: 1em 1em 1em 0;
-  max-width: 40%;
+  max-width: 52%;
   padding: 1em;
   opacity: 0;
   animation: fadeIn 0.3s forwards 1 ease normal;
   margin-right: auto;
   margin-left: 0;
   font-size: 0.9vw;
+  white-space: pre-wrap;
   word-wrap: break-word;
+  transform-origin: 0 50%;
+  transition: scale 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    scale: 1.1;
+  }
 
   @media screen and (max-width: 1024px) {
     font-size: 1.3vw;
@@ -28,12 +36,10 @@
 
   @media screen and (max-width: 768px) {
     font-size: 1.7vw;
-    max-width: 55%;
   }
 
   @media screen and (max-width: 640px) {
     font-size: 0.7rem;
-    max-width: 55%;
   }
 
   &.stickyRight {
