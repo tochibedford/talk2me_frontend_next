@@ -27,6 +27,11 @@
 
   &:hover {
     scale: 1.1;
+
+    .twitterIcon {
+      opacity: 1;
+      transform: translateX(0) rotate(0) scale(1);
+    }
   }
 
   @media screen and (max-width: 1024px) {
@@ -46,5 +51,20 @@
     margin-left: auto;
     margin-right: 0;
     border-radius: 1em 1em 0 1em;
+  }
+
+  .twitterIcon {
+    position: absolute;
+    left: 105%;
+    top: 50%;
+    opacity: 0;
+    transform-origin: 0 0;
+    transform: translateX(-50%) rotate(-90deg) scale(0.5);
+    transition: all 0.4s cubic-bezier(0.04, 0.05, 0, 1);
+
+    @media screen and (max-width: 768px) {
+      opacity: 1;
+      transform: translateX(0) rotate(0) scale(1);
+    }
   }
 }

@@ -54,6 +54,11 @@ export function useTweets(twitterId: string) {
                         const tweetSetList = tweetSet.split("\n")
                         genTweetsCache = genTweetsCache.concat(tweetSetList)
                     })
+                    //remove tweet number
+                    genTweetsCache = genTweetsCache.map((tweet) => {
+                        const regex = /^[0-9]./
+                        return tweet.replace(regex, "")
+                    })
                     setGenTweets(genTweetsCache)
                 })
                 .catch(err => {
