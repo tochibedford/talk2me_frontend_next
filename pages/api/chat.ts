@@ -34,7 +34,6 @@ export default async function handler(
     }
 
     if (Math.random() > 0.5 || count == 0) {
-      count++
       const response = await openai.createCompletion({
         model: "text-davinci-003",
         prompt: prompt,
@@ -46,9 +45,10 @@ export default async function handler(
       }
       openaiResponses.push(response.data)
     }
+    count++
     tweetBatch = tweetBatches.next();
   }
-  if (openaiResponses.length != 0) {
+  if (openaiResponses.length !== 0) {
     res.status(200).send({ message: openaiResponses })
   } else {
     res.status(200).send({ message: firstResponse })

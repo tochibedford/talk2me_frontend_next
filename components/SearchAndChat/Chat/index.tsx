@@ -17,12 +17,14 @@ export default function Chat() {
     const [chatInput, setChatInput] = useState("")
     const textAreaRef = useRef<HTMLTextAreaElement>(null)
     const chatBoxContainerRef = useRef<HTMLDivElement>(null)
-    const testChatRef = useRef<chatType[]>([])
 
     const scrollToBottom = () => {
-        const chatBoxContainer = chatBoxContainerRef.current
-        if (chatBoxContainer) {
-            chatBoxContainer.scrollTop = chatBoxContainer.scrollHeight
+        if (typeof window !== undefined) {
+
+            const chatBoxContainer = chatBoxContainerRef.current
+            if (chatBoxContainer) {
+                chatBoxContainer.scrollTop = chatBoxContainer.scrollHeight
+            }
         }
     }
 
@@ -45,7 +47,7 @@ export default function Chat() {
 
     }, [chatInput, textAreaRef])
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         scrollToBottom()
     }, [genTweets, testChat])
 
@@ -66,39 +68,6 @@ export default function Chat() {
             window.removeEventListener("resize", handleResize)
         }
     }, [])
-
-    // const handleChat = (e: FormEvent) => {
-    //     e.preventDefault()
-    //     let newChatSet: chatType[] = []
-    //     setTestChat(prev => {
-    //         newChatSet = [...prev, { userChat: true, text: chatInput }]
-    //         // testChatRef.current = newChatSet
-    //         // console.log(testChatRef.current)
-    //         const requestData = {
-    //             tweets: tweets,
-    //             chat: newChatSet
-    //         }
-    //         fetch("/api/chat", {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             body: JSON.stringify(requestData)
-    //         })
-    //             .then(res => res.json())
-    //             .then(data => {
-    //                 console.log(data)
-    //             })
-    //             .catch(err => {
-    //                 console.error(err)
-    //             })
-    //         return newChatSet
-    //     })
-    //     setChatInput("")
-
-
-
-    // }
 
     return (
         <div className={`${styles.container} ${twitterId ? styles.focused : ""}`}>
