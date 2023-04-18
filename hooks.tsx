@@ -1,11 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function useTweets(twitterId: string) {
     const [tweets, setTweets] = useState<string[]>([])
     const [genTweets, setGenTweets] = useState<string[]>([])
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const prevTwitterIdRef = useRef<string>();
+    const controllerRef = useRef<AbortController>()
+
     useEffect(() => {
+        if (twitterId === prevTwitterIdRef.current) { //because of react strictmode, this helps me make sure it doesn't fetch twice
+            return;
+        }
         if (twitterId) {
             setIsLoading(true)
             fetch(`/pyApi/v1/getUserTweets/${twitterId}`)
@@ -31,16 +37,21 @@ export function useTweets(twitterId: string) {
                     setError(error.message + (error.cause ? "\n" + error?.cause : ""))
                 })
         }
+
+        prevTwitterIdRef.current = twitterId;
     }, [twitterId])
 
-    useEffect(() => {
+    useEffect(() => { // calls the /api/chat endpoint when the a users tweets have been loaded in.
         if (twitterId && tweets.length > 0) {
+            const controller = new AbortController()
+            controllerRef.current = controller
             const requestData = {
                 twitterId: twitterId,
                 tweets: tweets
             }
             let genTweetsCache: string[] = []
             fetch("/api/chat", {
+                signal: controllerRef.current.signal,
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -68,7 +79,11 @@ export function useTweets(twitterId: string) {
                     setIsLoading(false)
                 })
         }
-    }, [tweets, twitterId])
+
+        () => {
+            controllerRef.current?.abort()
+        }
+    }, [tweets])
 
     return { genTweets, isLoading, error }
 }
