@@ -25,7 +25,6 @@ export default async function handler(
   const tweetBatches = generateBatchedTweets(tweets, 1800)
   let tweetBatch = tweetBatches.next();
   const openaiResponses = []
-  const firstResponse = []
   let count = 0
   while (!tweetBatch.done) {
     const prompt = `These are a bunch of tweets from the twitter user @${twitterId}: [\n ${tweetBatch.value} \n]\n${endPrompt}`
@@ -40,18 +39,11 @@ export default async function handler(
         max_tokens: 300,
         temperature: 0.69,
       });
-      if (count == 0) {
-        firstResponse.push(response.data)
-      }
       openaiResponses.push(response.data)
+      count++
     }
-    count++
     tweetBatch = tweetBatches.next();
   }
-  if (openaiResponses.length !== 0) {
-    res.status(200).send({ message: openaiResponses })
-  } else {
-    res.status(200).send({ message: firstResponse })
+  res.status(200).send({ message: openaiResponses })
 
-  }
 }
