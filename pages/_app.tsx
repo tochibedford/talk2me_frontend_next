@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </NavLayout>
       <div id="loader" className={`${isLoading === false ? "fadeOut" : ""}`}>
-        <div className="middle">TALK2ME</div>
+        <div className="middle">TALK4ME</div>
       </div>
     </>
   )
