@@ -1,5 +1,5 @@
 import styles from "./Chat.module.scss"
-import { FormEvent, useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import ChatBubble from "@components/components/ChatBubble"
@@ -55,16 +55,6 @@ export default function Chat() {
                     })}
                 </div>
             </div>
-            {/* <div className={styles.entryBox}>
-                <form action="" onSubmit={handleChat}>
-                    <fieldset>
-                        <label htmlFor="search">
-                            <textarea ref={textAreaRef} name="search" id="searchInput" onChange={(e) => setChatInput(e.target.value)} value={chatInput} required />
-                            <button type="submit" title="Send Message">SEND</button>
-                        </label>
-                    </fieldset>
-                </form>
-            </div> */}
         </div>
     )
 }
