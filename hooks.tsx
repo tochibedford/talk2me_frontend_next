@@ -50,7 +50,7 @@ export function useTweets(twitterId: string) {
                 tweets: tweets
             }
             let genTweetsCache: string[] = []
-            fetch("/api/chat", {
+            fetch("/func/v1", {
                 signal: controllerRef.current.signal,
                 method: 'POST',
                 headers: {
