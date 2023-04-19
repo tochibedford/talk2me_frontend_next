@@ -11,19 +11,15 @@ $rightOverlap: 2rem;
   border-bottom: 3px solid #000;
   padding: 5rem;
   line-height: 1em;
-  padding: 3rem;
-  padding-right: 3rem + $rightOverlap;
+  padding: 1.5rem;
+  padding-right: 1.5rem + $rightOverlap;
   text-align: right;
-
-  //   letter-spacing: -0.1em;
-  //   font-weight: bold;
   font-size: 2vw;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
 
   transition: all 0.3s;
-
-  @media screen and (min-width: 2000px) {
-    // font-size: 8vw;
-  }
 
   @media screen and (max-width: 768px) {
     width: 100%;
@@ -35,5 +31,36 @@ $rightOverlap: 2rem;
     display: grid;
     place-items: start center;
     font-size: 1rem;
+  }
+
+  .content {
+    margin-left: auto;
+    width: 55%;
+    font-size: 0.4em;
+    line-height: 1.5em;
+    white-space: pre-line;
+    text-align: justify;
+
+    .signOut {
+      text-align: right;
+    }
+  }
+
+  .socialsContainer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1em;
+    margin-left: auto;
+    width: 55%;
+    font-size: 0.4em;
+    line-height: 1.5em;
+    white-space: pre-line;
+
+    .socials {
+      font-weight: 800;
+      font-size: 1.1em;
+      display: flex;
+      gap: 0.2em;
+    }
   }
 }

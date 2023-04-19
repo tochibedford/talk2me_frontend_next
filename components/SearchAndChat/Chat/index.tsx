@@ -1,5 +1,5 @@
 import styles from "./Chat.module.scss"
-import { FormEvent, useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import ChatBubble from "@components/components/ChatBubble"
@@ -14,8 +14,6 @@ export default function Chat() {
     }
     const { twitterId } = useRouter().query
     const [testChat, setTestChat] = useState<chatType[]>([])
-    const [chatInput, setChatInput] = useState("")
-    const textAreaRef = useRef<HTMLTextAreaElement>(null)
     const chatBoxContainerRef = useRef<HTMLDivElement>(null)
 
     const scrollToBottom = () => {
@@ -29,6 +27,7 @@ export default function Chat() {
     }
 
     const { genTweets, isLoading, error } = useTweets(twitterId as string)
+
     useEffect(() => {
         const testChat: chatType[] = genTweets.map((item: string): chatType => {
             return { userChat: false, text: item }
@@ -36,38 +35,9 @@ export default function Chat() {
         setTestChat(testChat)
     }, [genTweets])
 
-    useEffect(() => {
-        const textArea = textAreaRef.current
-        if (textArea) {
-            textArea.style.height = "0px"
-            const computedStyles = window.getComputedStyle(textArea)
-            const em = parseFloat(computedStyles.getPropertyValue('font-size'))
-            textArea.style.height = `${Math.min(6 * em, textArea.scrollHeight)}px`
-        }
-
-    }, [chatInput, textAreaRef])
-
-    useEffect(() => {
+    useLayoutEffect(() => {
         scrollToBottom()
     }, [genTweets, testChat])
-
-    useEffect(() => {
-        const handleResize = () => {
-            const textArea = textAreaRef.current
-            if (textArea) {
-                textArea.style.height = "0px"
-                const computedStyles = window.getComputedStyle(textArea)
-                const em = parseFloat(computedStyles.getPropertyValue('font-size'))
-                textArea.style.height = `${Math.min(6 * em, textArea.scrollHeight)}px`
-            }
-        }
-
-        window.addEventListener("resize", handleResize)
-
-        return () => {
-            window.removeEventListener("resize", handleResize)
-        }
-    }, [])
 
     return (
         <div className={`${styles.container} ${twitterId ? styles.focused : ""}`}>
@@ -85,16 +55,6 @@ export default function Chat() {
                     })}
                 </div>
             </div>
-            {/* <div className={styles.entryBox}>
-                <form action="" onSubmit={handleChat}>
-                    <fieldset>
-                        <label htmlFor="search">
-                            <textarea ref={textAreaRef} name="search" id="searchInput" onChange={(e) => setChatInput(e.target.value)} value={chatInput} required />
-                            <button type="submit" title="Send Message">SEND</button>
-                        </label>
-                    </fieldset>
-                </form>
-            </div> */}
         </div>
     )
 }

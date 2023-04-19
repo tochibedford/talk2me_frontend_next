@@ -2,6 +2,6 @@ import styles from './Navbar.module.scss'
 
 export default function Navbar() {
     return (
-        <nav className={styles.container}>TALK2ME</nav>
+        <nav className={styles.container}>TALK4ME</nav>
     )
 }
