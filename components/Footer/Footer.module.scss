@@ -1,7 +1,9 @@
 $bottomOverlap: 3rem;
 $rightOverlap: 2rem;
+$sidePadding: 1.5rem + $rightOverlap;
 
 .container {
+  background-color: #efefef;
   width: 60%;
   height: 45%;
   position: fixed;
@@ -12,14 +14,14 @@ $rightOverlap: 2rem;
   padding: 5rem;
   line-height: 1em;
   padding: 1.5rem;
-  padding-right: 1.5rem + $rightOverlap;
+  padding-right: $sidePadding;
   text-align: right;
   font-size: 2vw;
   display: flex;
   flex-direction: column;
   gap: 0.5em;
 
-  transition: all 0.3s;
+  transition: width 0.3s, height 0.5s, bottom 0.6s;
 
   @media screen and (max-width: 768px) {
     width: 100%;
@@ -31,15 +33,64 @@ $rightOverlap: 2rem;
     display: grid;
     place-items: start center;
     font-size: 1rem;
+    z-index: 1;
+  }
+
+  .title {
+    position: relative;
+    @media screen and (max-width: 768px) {
+      font-size: 2.2rem;
+      cursor: pointer;
+    }
+    .caretUp {
+      font-weight: 300;
+      font-size: 0.7em;
+      position: absolute;
+      bottom: 150%;
+      width: 100%;
+      text-align: center;
+      transform: scale(1.4, 0.8);
+      display: none;
+      @media screen and (max-width: 768px) {
+        display: initial;
+        font-size: 2.2rem;
+        cursor: pointer;
+      }
+    }
   }
 
   .content {
     margin-left: auto;
     width: 55%;
-    font-size: 0.4em;
+    font-size: 0.8vw;
     line-height: 1.5em;
     white-space: pre-line;
     text-align: justify;
+    transition: opacity 0.3s;
+
+    @media screen and (max-width: 1500px) {
+      font-size: 0.9vw;
+    }
+
+    @media screen and (max-width: 1300px) {
+      font-size: 1vw;
+    }
+
+    @media screen and (max-width: 1100px) {
+      font-size: 1.2vw;
+    }
+
+    @media screen and (max-width: 950px) {
+      font-size: 1.3vw;
+    }
+
+    @media screen and (max-width: 900px) {
+      font-size: 1.35vw;
+    }
+
+    @media screen and (max-width: 768px) {
+      opacity: 0;
+    }
 
     .signOut {
       text-align: right;
@@ -47,20 +98,58 @@ $rightOverlap: 2rem;
   }
 
   .socialsContainer {
+    position: absolute;
+    bottom: 0 + $bottomOverlap;
+    right: $sidePadding;
     display: flex;
     justify-content: flex-end;
     gap: 1em;
-    margin-left: auto;
     width: 55%;
     font-size: 0.4em;
     line-height: 1.5em;
     white-space: pre-line;
+
+    @media screen and (max-width: 1500px) {
+      font-size: 0.6em;
+    }
+
+    @media screen and (max-width: 1100px) {
+    }
+
+    @media screen and (max-width: 768px) {
+      width: 100%;
+      left: 0;
+      justify-content: center;
+      font-size: 0.8em;
+    }
+
+    .socialsPrompt {
+      @media screen and (max-width: 768px) {
+        display: none;
+      }
+    }
 
     .socials {
       font-weight: 800;
       font-size: 1.1em;
       display: flex;
       gap: 0.2em;
+
+      a {
+        transition: font-size 0.3s;
+        cursor: pointer;
+
+        &:hover {
+          font-size: 1.2em;
+        }
+      }
     }
+  }
+}
+
+.isOpen {
+  @media screen and (max-width: 768px) {
+    height: 60%;
+    bottom: 0;
   }
 }

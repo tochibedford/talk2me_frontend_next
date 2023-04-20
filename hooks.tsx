@@ -34,6 +34,7 @@ export function useTweets(twitterId: string) {
                     setTweets(result)
                 })
                 .catch((error: Error) => {
+                    setIsLoading(false)
                     setError(error.message + (error.cause ? "\n" + error?.cause : ""))
                 })
         }
