@@ -2,7 +2,7 @@ import { useState } from 'react'
 import styles from './Footer.module.scss'
 
 export default function Footer() {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     return (
         <div className={`${styles.container} ${isOpen ? styles.isOpen : ""}`}>
             <div className={styles.title} onClick={() => setIsOpen(prev => !prev)}>
