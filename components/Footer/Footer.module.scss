@@ -38,9 +38,11 @@ $sidePadding: 1.5rem + $rightOverlap;
 
   .title {
     position: relative;
+    pointer-events: none;
     @media screen and (max-width: 768px) {
       font-size: 2.2rem;
       cursor: pointer;
+      pointer-events: all;
     }
     .caretUp {
       font-weight: 300;
@@ -55,6 +57,10 @@ $sidePadding: 1.5rem + $rightOverlap;
         display: initial;
         font-size: 2.2rem;
         cursor: pointer;
+      }
+
+      &.footerOpen {
+        transform: scale(1.4, 0.8) rotate(180deg);
       }
     }
   }
@@ -90,10 +96,23 @@ $sidePadding: 1.5rem + $rightOverlap;
 
     @media screen and (max-width: 768px) {
       opacity: 0;
+      width: 100%;
+      font-size: 2.8vw;
+      font-weight: 500;
+    }
+
+    &.footerOpen {
+      @media screen and (max-width: 768px) {
+        opacity: 1;
+      }
     }
 
     .signOut {
       text-align: right;
+
+      @media screen and (max-width: 768px) {
+        text-align: left;
+      }
     }
   }
 

@@ -6,10 +6,10 @@ export default function Footer() {
     return (
         <div className={`${styles.container} ${isOpen ? styles.isOpen : ""}`}>
             <div className={styles.title} onClick={() => setIsOpen(prev => !prev)}>
-                <div className={styles.caretUp}>{"^"}</div>
+                <div className={[styles.caretUp, isOpen ? styles.footerOpen : ""].join(" ")}>{"^"}</div>
                 About
             </div>
-            <div className={[styles.content, styles.isOpen ? "" : ""].join(" ")}>
+            <div className={[styles.content, isOpen ? styles.footerOpen : ""].join(" ")}>
                 You can generate new potential tweets based on your public tweet style. As a software engineer who loves weekend projects, I built this site as an excuse to tinker with AI models again.
                 Using the tool is easy - simply enter a Twitter handle (make sure it's a public account), and wait for it to load the tweets. I've written a python script to scrape your tweets and I generate new potential tweets using AI.
                 This website is a personal project of mine, and is not intended to sell you anything.
@@ -17,7 +17,7 @@ export default function Footer() {
                     <br />
                     Cheers,
                     <br />
-                    -Tochi
+                    -Tochi Bedford
                 </div>
             </div>
             <div className={styles.socialsContainer}>
