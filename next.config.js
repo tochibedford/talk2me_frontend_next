@@ -11,6 +11,10 @@ const nextConfig = {
         destination: "https://talk2mebackend2-musicofbyte.b4a.run/:path*",
       },
       {
+        source: "/pyApi/v2/:path*",
+        destination: "https://talk2me-pyapi-vxd6ybtwqa-uc.a.run.app/:path*",
+      },
+      {
         source: "/func/v1/:path*",
         destination:
           "https://us-central1-talk2me-383122.cloudfunctions.net/Talk2Me/:path*",
