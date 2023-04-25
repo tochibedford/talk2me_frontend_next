@@ -23,12 +23,12 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://talk4me.tochibedford.com" />
         <meta property="og:description" content="Generate tweets in the style of anyone public twitter handle." />
-        <meta property="og:image" content="talk4me.png" />
+        <meta property="og:image" content="https://talk4me.tochibedford.com/talk4me.png" />
         <meta property="og:site_name" content="Talk4Me" />
 
         <meta name="twitter:title" content={`Generate tweets like ${twitterId ? "@" + twitterId : "anyone"}`} />
         <meta name="twitter:description" content="Generate tweets in the style of anyone public twitter handle." />
-        <meta name="twitter:image" content="talk4me.png" />
+        <meta name="twitter:image" content="https://talk4me.tochibedford.com/talk4me.png" />
         <meta name="twitter:image:alt" content="Talk4Me image" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@tochibedford" />
