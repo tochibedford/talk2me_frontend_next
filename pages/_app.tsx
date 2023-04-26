@@ -35,6 +35,8 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="twitter:site" content="@tochibedford" />
         <meta name="twitter:creator" content="@tochibedford" />
 
+        <meta name="description" content="Generate Tweets in the style of any Twitter account using AI tech. As far as a users tweets are public you can use AI, to generate tweets like theirs. They are AI tweets, so they are eerily in tune with your tweet style." />
+
       </Head>
       <NavLayout>
         <Component {...pageProps} />
