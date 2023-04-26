@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app'
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 
 export default function App({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(true);
@@ -41,6 +42,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <div id="loader" className={`${isLoading === false ? "fadeOut" : ""}`}>
         <div className="middle">TALK4ME</div>
       </div>
+      <Analytics />
     </>
   )
 }
