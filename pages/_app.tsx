@@ -35,7 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="twitter:site" content="@tochibedford" />
         <meta name="twitter:creator" content="@tochibedford" />
 
-        <meta name="description" content="Talk4Me generates tweets in the style of any Twitter account using AI tech. As far as a users tweets are public you can use AI, to generate tweets like theirs. They are AI tweets, so they are eerily in tune with your tweet style." />
+        <meta name="description" content="Talk4Me is an AI tweet generator that generates tweets in the style of any public Twitter account. As far as a users tweets are public you can use AI, to generate tweets like theirs. They are AI tweets, so they are eerily in tune with your tweet style." />
 
       </Head>
       <NavLayout>
