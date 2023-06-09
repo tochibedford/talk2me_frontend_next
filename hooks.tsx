@@ -14,7 +14,7 @@ export function useTweets(twitterId: string) {
         }
         if (twitterId) {
             setIsLoading(true)
-            fetch(`https://talk2me-pyapi-vxd6ybtwqa-uc.a.run.app/getUserTweets/${twitterId}`)
+            fetch(`https://talk2me-pyapi-vxd6ybtwqa-uc.a.run.app/getUserTweets/${twitterId}/500`)
                 .then(res => {
                     if (res.status === 502) {
                         throw Error("The request timed out, please try again.", { cause: "Sometimes a user's tweets are a lot, and the request will time out before our server can return. Not to worry, the request still runs in the background, so you can just refresh! P.S. this should be fixed soon" })
