@@ -18,7 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Generate tweets like {twitterId ? "@" + twitterId : "anyone"} | Tweet4Me</title>
+        <title>Generate tweets like {twitterId ? "@" + twitterId : "anyone"} | Talk4Me</title>
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, user-scalable=0" />
         <meta property="og:title" content={`Generate tweets like ${twitterId ? "@" + twitterId : "anyone"}`} />
         <meta property="og:type" content="website" />
@@ -35,7 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="twitter:site" content="@tochibedford" />
         <meta name="twitter:creator" content="@tochibedford" />
 
-        <meta name="description" content="Generate Tweets in the style of any Twitter account using AI tech. As far as a users tweets are public you can use AI, to generate tweets like theirs. They are AI tweets, so they are eerily in tune with your tweet style." />
+        <meta name="description" content="Talk4Me is an AI tweet generator that generates tweets in the style of any public Twitter account. As far as a users tweets are public you can use AI, to generate tweets like theirs. They are AI tweets, so they are eerily in tune with your tweet style." />
 
       </Head>
       <NavLayout>

@@ -68,9 +68,10 @@
         .atSymbol {
           position: absolute;
           top: 50%;
-          left: 0.5em;
+          left: 0.4em;
           opacity: 0.5;
           font-weight: 700;
+          font-size: 1.2em;
           transform: translateY(-50%);
         }
         input {
